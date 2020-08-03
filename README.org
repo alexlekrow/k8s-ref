@@ -1,26 +1,10 @@
-* Kubectl Kubernetes CheatSheet                                   :Cloud:
-:PROPERTIES:
-:type:     kubernetes
-:export_file_name: k8s-ref.pdf
-:END:
+* Kubernetes Reference Repo
 
-#+BEGIN_HTML
-<a href="https://github.com/dennyzhang/cheatsheet-kubernetes-A4"><img align="right" width="200" height="183" src="https://www.dennyzhang.com/wp-content/uploads/denny/watermark/github.png" /></a>
-<div id="the whole thing" style="overflow: hidden;">
-<div style="float: left; padding: 5px"> <a href="https://www.linkedin.com/in/dennyzhang001"><img src="https://www.dennyzhang.com/wp-content/uploads/sns/linkedin.png" alt="linkedin" /></a></div>
-<div style="float: left; padding: 5px"><a href="https://github.com/dennyzhang"><img src="https://www.dennyzhang.com/wp-content/uploads/sns/github.png" alt="github" /></a></div>
-<div style="float: left; padding: 5px"><a href="https://www.dennyzhang.com/slack" target="_blank" rel="nofollow"><img src="https://www.dennyzhang.com/wp-content/uploads/sns/slack.png" alt="slack"/></a></div>
-</div>
-
-<br/><br/>
-<a href="http://makeapullrequest.com" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"/></a>
-#+END_HTML
-
-** Common Commands
+** Common Kubectl Commands
 | Name                                 | Command                                                                                   |
 |--------------------------------------+-------------------------------------------------------------------------------------------|
-| Run curl test temporarily            | =kubectl run --generator=run-pod/v1 --rm mytest --image=yauritux/busybox-curl -it=        |
-| Run wget test temporarily            | =kubectl run --generator=run-pod/v1 --rm mytest --image=busybox -it wget=                 |
+| Run curl test temporarily            | =kubectl run --generator=run-pod/v1 --rm <TEST> --image=yauritux/busybox-curl -it=        |
+| Run wget test temporarily            | =kubectl run --generator=run-pod/v1 --rm <TEST> --image=busybox -it wget=                 |
 | Run nginx deployment with 2 replicas | =kubectl run my-nginx --image=nginx --replicas=2 --port=80=                               |
 | Run nginx pod and expose it          | =kubectl run my-nginx --restart=Never --image=nginx --port=80 --expose=                   |
 | Run nginx deployment and expose it   | =kubectl run my-nginx --image=nginx --port=80 --expose=                                   |
@@ -34,25 +18,23 @@
 | Get resources with json output       | =kubectl get pods --all-namespaces -o json=                                               |
 | Validate yaml file with dry run      | =kubectl create --dry-run --validate -f pod-dummy.yaml=                                   |
 | Start a temporary pod for testing    | =kubectl run --rm -i -t --image=alpine test-$RANDOM -- sh=                                |
-| kubectl run shell command            | =kubectl exec -it mytest -- ls -l /etc/hosts=                                             |
+| kubectl run shell command            | =kubectl exec -it <TEST> -- ls -l /etc/hosts=                                             |
 | Get system conf via configmap        | =kubectl -n kube-system get cm kubeadm-config -o yaml=                                    |
 | Get deployment yaml                  | =kubectl -n denny-websites get deployment mysql -o yaml=                                  |
 | Explain resource                     | =kubectl explain pods=, =kubectl explain svc=                                             |
 | Watch pods                           | =kubectl get pods  -n wordpress --watch=                                                  |
-| Query healthcheck endpoint           | =curl -L http://127.0.0.1:10250/healthz=                                                  |
+| Query health-check endpoint           | =curl -L http://127.0.0.1:10250/healthz=                                                  |
 | Open a bash terminal in a pod        | =kubectl exec -it storage sh=                                                             |
 | Check pod environment variables      | =kubectl exec redis-master-ft9ex env=                                                     |
 | Enable kubectl shell autocompletion  | =echo "source <(kubectl completion bash)" >>~/.bashrc=, and reload                        |
 | Use minikube dockerd in your laptop  | =eval $(minikube docker-env)=, No need to push docker hub any more                        |
 | Kubectl apply a folder of yaml files | =kubectl apply -R -f .=                                                                   |
-| Get services sorted by name          | kubectl get services --sort-by=.metadata.name                                             |
-| Get pods sorted by restart count     | kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'                    |
-| List pods and images                 | kubectl get pods -o='custom-columns=PODS:.metadata.name,Images:.spec.containers[*].image' |
-| List all container images            | [[https://github.com/dennyzhang/cheatsheet-kubernetes-A4/blob/master/list-all-images.sh#L14-L17][list-all-images.sh]]                                                                        |
-| kubeconfig skip tls verification     | [[https://github.com/dennyzhang/cheatsheet-kubernetes-A4/blob/master/skip-tls-verify.md][skip-tls-verify.md]]                                                                        |
-| [[https://kubernetes.io/docs/tasks/tools/install-kubectl/][Ubuntu install kubectl]]               | ="deb https://apt.kubernetes.io/ kubernetes-xenial main"=                                 |
-| Reference                            | [[https://github.com/kubernetes/kubernetes/tags][GitHub: kubernetes releases]]                                                               |
-| Reference                            | [[https://cheatsheet.dennyzhang.com/cheatsheet-minikube-A4][minikube cheatsheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-docker-A4][docker cheatsheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-openshift-A4][OpenShift CheatSheet]]                              |
+| Get services sorted by name          | =kubectl get services --sort-by=.metadata.name                                             |
+| Get pods sorted by restart count     | =kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'                    |
+| List pods and images                 | =kubectl get pods -o='custom-columns=PODS:.metadata.name,Images:.spec.containers[*].image' |
+| List all container images            | [[https://github.com/alexlekrow/k8s-ref/blob/master/list-all-images.sh#L14-L17][list-all-images.sh]]                                                                        |
+| kubeconfig skip tls verification     | [[https://github.com/alexlekrow/k8s-ref/blob/master/skip-tls-verify.md][skip-tls-verify.md]]                                                                        |
+
 ** Check Performance
 | Name                                         | Command                                              |
 |----------------------------------------------+------------------------------------------------------|
